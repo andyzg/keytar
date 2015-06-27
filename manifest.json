@@ -10,7 +10,7 @@
     {
       "matches": ["https://twitter.com/*"],
       "css": [ "style.css" ],
-      "js": ["jquery-2.1.4.min.js", "content.js"]
+      "js": ["jquery.js", "jquery.easing.min.js", "content.js"]
     }
   ],
   "options_page": "options.html",

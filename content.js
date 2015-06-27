@@ -139,11 +139,39 @@ function activateColumn(column) {
   $('.kt-column:eq('+(column-1)+')').addClass('active');
 }
 
+function animateCharacter(charTyped) {
+  var $charBox = $('#kt-' + charTyped);
+  console.log($charBox);
+  $charBox.find('svg').remove();
+  var cx = $($charBox).width() / 2;
+  var cy = $($charBox).height() / 2;
+  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '"></circle></svg>');
+  console.log(cx, cy);
+  setTimeout(function() {
+    var $circle = $($charBox).find('circle');
+    $circle.animate({
+      r: $($charBox).width()
+    }, {
+      easing: 'easeOutQuad',
+      duration: 400,
+      step: function(val) {
+        $circle.attr('r', val);
+      }
+    });
+  });
+}
+
+setInterval(function() {
+  console.log('Animate!');
+  animateCharacter('A');
+}, 1000);
+
 function playNote(charTyped) {
   if (!initialized) return;
   if (charTyped === 'bs') {
     $text.html($text.text().slice(0, $text.text().length - 1));
   } else {
+    animateCharacter(charTyped);
     $text.html($text.text() + charTyped);
   }
 }
@@ -210,6 +238,7 @@ function loadKeyboard() {
       $char.classList.add('kt-char');
       $p.textContent = letter;
       $char.appendChild($p);
+      $char.id = 'kt-' + letter;
       $column.appendChild($char);
     });
     $columns.appendChild($column);

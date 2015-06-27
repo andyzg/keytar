@@ -5,6 +5,17 @@ body {
   overflow: hidden;
 }
 
+.kt-touch {
+  height: 100%;
+  margin-top: -60px;
+  overflow: hidden;
+  width: 100%;
+}
+
+circle {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .kt-keyboard {
   box-sizing: border-box;
   position: fixed;
