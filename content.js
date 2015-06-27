@@ -105,6 +105,9 @@ KeyboardState.prototype.addNote = function(note) {
 var keyboardState = new KeyboardState(typeChar);
 port.onMessage.addListener(function(msg) {
   console.log('got' + msg.note);
+  if ($pitch) {
+    $pitch.text(msg.note);
+  }
   keyboardState.addNote(msg.note);
 });
 
@@ -145,7 +148,7 @@ function animateCharacter(charTyped) {
   $charBox.find('svg').remove();
   var cx = $($charBox).width() / 2;
   var cy = $($charBox).height() / 2;
-  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '" fill="#7A89C2"></circle></svg>');
+  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '" fill="#80BDC9"></circle></svg>');
   console.log(cx, cy);
   setTimeout(function() {
     var $circle = $($charBox).find('circle');
