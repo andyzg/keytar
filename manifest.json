@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+
+  "name": "Getting started example",
+  "description": "This extension shows a Google Image search result for the current page",
+  "version": "1.0",
+  "background": {
+    "scripts": [
+      "background_scripts/patch-worker.js",
+      "background_scripts/audio.js"
+    ]
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+    "audioCapture"
+  ]
+}
