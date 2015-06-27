@@ -1,0 +1,49 @@
+.kt-keyboard {
+}
+
+body {
+  background-color: #ddd;
+  font-family: 'Roboto', sans-serif;
+}
+
+.kt-backboard {
+  position: fixed;
+  width: 100vw;
+  height: 240px;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  /*border-top: 6px solid #89a;*/
+  box-shadow: 0 0 16px 0 #888;
+}
+
+.kt-active-pitch {
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background-color: #f04669;
+  border: 6px solid #fff;
+  top: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  box-shadow: 0 0 24px 0 #888;
+}
+
+.kt-active-pitch p {
+  color: #fff;
+  font-size: 48px;
+  line-height: 80px;
+  margin: 0;
+}
+
+.kt-keywrap {
+
+}
+
+.kt-column {
+  border-radius: 6px;
+  background-color: #ec8177;
+  width: 64px;
+  height: 128px;
+}
