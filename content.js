@@ -151,9 +151,11 @@ function activateColumn(column) {
 }
 
 function animateCharacter(charTyped) {
-  // if ('./,;'.indexOf(this.options) > -1) {
-  //   return;
-  // }
+  if ('./,;'.indexOf(charTyped) > -1) {
+    return;
+  } else {
+    console.log('wtf', charTyped);
+  }
   var $charBox = $('#kt-' + charTyped);
   console.log($charBox);
   $charBox.find('svg').remove();
