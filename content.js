@@ -169,7 +169,6 @@ function typeChar(charTyped) {
   if (charTyped === 'bs') {
     $text.html($text.text().slice(0, $text.text().length - 1));
   } else {
-    animateCharacter(charTyped);
     $text.html($text.text() + charTyped);
   }
 }
