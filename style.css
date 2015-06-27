@@ -1,0 +1,119 @@
+body {
+  background-color: #ddd;
+  width: 800px;
+  height: 300px;
+  overflow: hidden;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+
+}
+
+.kt-keyboard {
+  box-sizing: border-box;
+  position: fixed;
+  width: 100vw;
+  height: 300px;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+  padding-top: 64px;
+  text-align: center;
+  transform: translateY(350px);
+  transition: transform 0.3s;
+}
+.kt-keyboard.active {
+  transform: none;
+}
+.kt-active-pitch {
+  position: absolute;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background-color: #30a67b;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+}
+.kt-active-pitch p {
+  font-size: 24px;
+  line-height: 80px;
+  margin: 0;
+}
+.kt-strings {
+  position: absolute;
+  transform: translateX(-64px);
+  width: 48px;
+}
+.kt-note {
+  background-color: #30a67b;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  margin-top: 8px;
+}
+.kt-note:first-child {
+  margin-top: 6px;
+}
+.kt-note p {
+  font-size: 16px;
+  line-height: 40px;
+  margin: 0;
+}
+.kt-keywrap {
+  display: inline-block;
+  width: 528px;
+}
+.kt-keywrap:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+}
+.kt-column {
+  float: left;
+  margin-left: 12px;
+  margin-bottom: 12px;
+  background-color: #92f47e;
+  width: 96px;
+  height: 144px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s;
+}
+.kt-column.active {
+  background-color: #3ac469;
+}
+.kt-column:first-child {
+  margin-left: 0;
+}
+.kt-char {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  text-align: center;
+}
+.kt-char.symbol {
+}
+.kt-char p {
+  font-size: 24px;
+  line-height: 48px;
+  margin: 0;
+}
+.kt-char.bottom {
+  background-color: #3ac469;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+.kt-char.bottom.spacebar {
+  width: 312px;
+}
+.kt-char.bottom.backspace {
+  margin-left: 12px;
+  width: 204px;
+}
