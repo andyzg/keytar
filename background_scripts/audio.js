@@ -91,8 +91,12 @@ var Controller = function() {
   this.magSequencer = new MagnitudeSequencer(2, this.addMagnitude.bind(this));
   // This is the class that checks if there's a note played or if it's just noise
   this.notePlayed = null;
+
   // Don't want to repeat the same note
   this.lastPlayedIndex = -1;
+  this.lastTimestamp = 0;
+
+  // Content script information
   this.currentTabId = -1;
   this.currentPort = null;
 };
@@ -119,13 +123,14 @@ Controller.prototype.cancelNotePlayed = function() {
 
 Controller.prototype.callNote = function(index) {
   this.notePlayed = null;
-  if (index === this.lastPlayedIndex) {
+  if (index === this.lastPlayedIndex && new Date().getTime() - this.lastTimestamp < 500) {
     return;
   }
   console.log(this.FREQUENCIES[index]);
   if (this.currentPort) {
     this.currentPort.postMessage(this.FREQUENCIES[index]);
     this.lastPlayedIndex = index;
+    this.lastTimestamp = new Date().getTime();
   }
 };
 
@@ -194,8 +199,8 @@ Controller.prototype.start = function() {
 };
 
 
-var Controller = new Controller();
-Controller.start();
+var controller = new Controller();
+controller.start();
 
 chrome.runtime.onConnect.addListener(function(port) {
   console.assert(port.name === 'keytar');
@@ -204,6 +209,6 @@ chrome.runtime.onConnect.addListener(function(port) {
     active: true
   }, function(tabId) {
     // Only one subscription at a time, replaces previous one
-    Controller.subscribe(tabId, port);
+    controller.subscribe(tabId, port);
   });
 });
