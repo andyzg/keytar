@@ -9,10 +9,96 @@ var $keyboard,
   $text,
   $pitch;
 
+var KEY_NOTE_MAPPINGS = {
+  'E4': {
+    'G3': 'Z',
+    'G#3': 'X',
+    'B4': 'A',
+    'C4': 'S',
+    'E4': 'Q',
+    'F4': 'W',
+  },
+  'F4': {
+    'G#3': 'C',
+    'A4': 'V',
+    'C4': 'D',
+    'C#4': 'F',
+    'F4': 'E',
+    'F#4': 'R',
+  },
+  'F#4': {
+    'A4': 'B',
+    'A#4': 'N',
+    'C#4': 'G',
+    'D4': 'H',
+    'F#4': 'T',
+    'G4': 'Y',
+  },
+  'G4': {
+    'A#4': 'M',
+    'B4': ',',
+    'D4': 'J',
+    'D#4': 'K',
+    'G4': 'U',
+    'G#4': 'I',
+  },
+  'G#4': {
+    'B4': '.',
+    'C4': '/',
+    'D#4': 'L',
+    'E4': ';',
+    'G#4': 'O',
+    'A5': 'P',
+  },
+  'D3': ' ',
+  'D#3': ' ',
+  'E3': ' ',
+  'F3': 'bs',
+  'F#3': 'bs'
+};
+
+var KeyboardState = function(callback) {
+  this.typeKey = callback;
+  this.options = KEY_NOTE_MAPPINGS;
+};
+
+KeyboardState.prototype.addNote = function(note) {
+  if (!(note in this.options)) {
+    return;
+  }
+  this.options = this.options[note];
+  console.log('OPTIONS:', this.options);
+  if (typeof this.options === 'string') {
+    this.typeKey(this.options);
+    this.options = KEY_NOTE_MAPPINGS;
+    activeColumn = 0;
+    activateColumn(activeColumn);
+  } else {
+    switch (note) {
+      case 'E4':
+        activeColumn = 1;
+        break;
+      case 'F4':
+        activeColumn = 2;
+        break;
+      case 'F#4':
+        activeColumn = 3;
+        break;
+      case 'G4':
+        activeColumn = 4;
+        break;
+      case 'G#4':
+        activeColumn = 5;
+        break;
+    }
+    activateColumn(activeColumn);
+  }
+};
+
+var keyboardState = new KeyboardState(playNote);
 port.onMessage.addListener(function(msg) {
-  if (!active) return;
-  console.log('got ' + msg.note);
-  playNote(msg.note);
+  console.log('got' + msg.note);
+  keyboardState.addNote(msg.note);
 });
 
 loadStyle();
@@ -46,10 +132,13 @@ function activateColumn(column) {
   $('.kt-column:eq('+(column-1)+')').addClass('active');
 }
 
-function playNote(note) {
-  if (!active) return;
-  $pitch.html(note);
-  $text.val($text.val() + 'c');
+function playNote(charTyped) {
+  if (!initialized) return;
+  if (charTyped === 'bs') {
+    $text.html($text.text().splice(0, $text.text().length - 1));
+  } else {
+    $text.html($text.text() + charTyped);
+  }
 }
 
 function loadStyle() {
