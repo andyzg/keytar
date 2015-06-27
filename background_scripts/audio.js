@@ -69,7 +69,7 @@ NotePlayed.prototype.addMagnitude = function(val) {
   if (this.series.length >= this.maxLength) {
     var pre = Math.max(this.series[0], this.series[1]);
     var post = Math.min(this.series[2], this.series[3]);
-    console.log('DIVIDE', pre / post);
+    // console.log('DIVIDE', pre / post);
     if ((pre / post > 3 && pre > 10000) || pre > 100000) {
       this.callback(this.index);
     } else {
@@ -98,14 +98,14 @@ var Controller = function() {
 };
 
 Controller.prototype.subscribe = function(tabId, port) {
-  console.log(tabId);
+  // console.log(tabId);
   this.currentTabId = tabId;
   this.currentPort = port;
 }
 
 Controller.prototype.addMagnitude = function(mag, index) {
   if (this.notePlayed) {
-    console.debug('DEBUG', mag);
+    // console.debug('DEBUG', mag);
     this.notePlayed.addMagnitude(mag);
   } else {
     this.notePlayed = new NotePlayed(mag, index, this.callNote.bind(this), this.cancelNotePlayed.bind(this));
@@ -123,8 +123,10 @@ Controller.prototype.callNote = function(index) {
     return;
   }
   console.log(this.FREQUENCIES[index]);
-  this.currentPort.postMessage(this.FREQUENCIES[index]);
-  this.lastPlayedIndex = index;
+  if (this.currentPort) {
+    this.currentPort.postMessage(this.FREQUENCIES[index]);
+    this.lastPlayedIndex = index;
+  }
 };
 
 Controller.prototype.processDataSeries = function(data) {
@@ -138,7 +140,7 @@ Controller.prototype.onWorkerMessage = function(event) {
     if (this.notePlayed) {
       index = this.notePlayed.getIndex();
     }
-    console.log('fuk', magnitudes[index]);
+    // console.log('fuk', magnitudes[index]);
     this.magSequencer.addMagnitude(magnitudes[index]);
     return;
   }

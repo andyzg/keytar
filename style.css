@@ -5,13 +5,6 @@ body {
   overflow: hidden;
 }
 
-.kt-touch {
-  height: 100%;
-  margin-top: -60px;
-  overflow: hidden;
-  width: 100%;
-}
-
 circle {
   background-color: rgba(255, 255, 255, 0.1);
 }
@@ -43,7 +36,7 @@ circle {
   border-radius: 50%;
   width: 80px;
   height: 80px;
-  background-color: #0084b4;
+  background-color: #7A7978;
   left: 50%;
   top: 0;
   text-align: center;
@@ -61,7 +54,7 @@ circle {
   width: 48px;
 }
 .kt-note {
-  background-color: #0084b4;
+  background-color: #7A7978;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -90,14 +83,14 @@ circle {
   float: left;
   margin-left: 12px;
   margin-bottom: 12px;
-  background-color: #1dcaff;
+  background-color: #80BDC9;
   width: 96px;
   height: 144px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s;
 }
 .kt-column.active {
-  background-color: #00aced;
+  background-color: #7A89C2;
 }
 .kt-column:first-child {
   margin-left: 0;
@@ -111,13 +104,18 @@ circle {
 }
 .kt-char.symbol {
 }
+.kt-char .kt-touch {
+  height: 100%;
+  /*overflow: hidden;*/
+  width: 100%;
+}
 .kt-char p {
   font-size: 24px;
   line-height: 48px;
   margin: 0;
 }
 .kt-char.bottom {
-  background-color: #00aced;
+  background-color: #7A89C2;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 }
 .kt-char.bottom.spacebar {

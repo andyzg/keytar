@@ -102,7 +102,7 @@ KeyboardState.prototype.addNote = function(note) {
   }
 };
 
-var keyboardState = new KeyboardState(playNote);
+var keyboardState = new KeyboardState(typeChar);
 port.onMessage.addListener(function(msg) {
   console.log('got' + msg.note);
   keyboardState.addNote(msg.note);
@@ -145,28 +145,23 @@ function animateCharacter(charTyped) {
   $charBox.find('svg').remove();
   var cx = $($charBox).width() / 2;
   var cy = $($charBox).height() / 2;
-  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '"></circle></svg>');
+  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '" fill="#7A89C2"></circle></svg>');
   console.log(cx, cy);
   setTimeout(function() {
     var $circle = $($charBox).find('circle');
     $circle.animate({
-      r: $($charBox).width()
+      r: $($charBox).width(),
+      opacity: 0.0
     }, {
       easing: 'easeOutQuad',
       duration: 400,
-      step: function(val) {
-        $circle.attr('r', val);
+      complete: function() {
       }
     });
   });
 }
 
-setInterval(function() {
-  console.log('Animate!');
-  animateCharacter('A');
-}, 1000);
-
-function playNote(charTyped) {
+function typeChar(charTyped) {
   if (!initialized) return;
   if (charTyped === 'bs') {
     $text.html($text.text().slice(0, $text.text().length - 1));
