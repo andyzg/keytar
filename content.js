@@ -10,51 +10,51 @@ var $keyboard,
   $pitch;
 
 var KEY_NOTE_MAPPINGS = {
-  'E4': {
-    'G3': 'Z',
-    'G#3': 'X',
-    'B4': 'A',
-    'C4': 'S',
-    'E4': 'Q',
-    'F4': 'W',
-  },
   'F4': {
-    'G#3': 'C',
-    'A4': 'V',
-    'C4': 'D',
-    'C#4': 'F',
-    'F4': 'E',
-    'F#4': 'R',
+    'G#3': 'Z',
+    'A3': 'X',
+    'C4': 'A',
+    'C#4': 'S',
+    'F4': 'Q',
+    'F#4': 'W',
   },
   'F#4': {
-    'A4': 'B',
-    'A#4': 'N',
-    'C#4': 'G',
-    'D4': 'H',
-    'F#4': 'T',
-    'G4': 'Y',
+    'A4': 'C',
+    'A#4': 'V',
+    'C#4': 'D',
+    'D4': 'F',
+    'F#4': 'E',
+    'G4': 'R',
   },
   'G4': {
-    'A#4': 'M',
-    'B4': ',',
-    'D4': 'J',
-    'D#4': 'K',
-    'G4': 'U',
-    'G#4': 'I',
+    'A#4': 'B',
+    'B4': 'N',
+    'D4': 'G',
+    'D#4': 'H',
+    'G4': 'T',
+    'G#4': 'Y',
   },
   'G#4': {
-    'B4': '.',
-    'C4': '/',
-    'D#4': 'L',
-    'E4': ';',
-    'G#4': 'O',
-    'A5': 'P',
+    'B4': 'M',
+    'C4': ',',
+    'D#4': 'J',
+    'E4': 'K',
+    'G#4': 'U',
+    'A5': 'I',
   },
-  'D3': ' ',
+  'A5': {
+    'C4': '.',
+    'C#4': '/',
+    'E4': 'L',
+    'F4': ';',
+    'A5': 'O',
+    'A#5': 'P',
+  },
   'D#3': ' ',
   'E3': ' ',
-  'F3': 'bs',
-  'F#3': 'bs'
+  'F3': ' ',
+  'F#3': 'bs',
+  'G3': 'bs'
 };
 
 var KeyboardState = function(callback) {
@@ -75,19 +75,19 @@ KeyboardState.prototype.addNote = function(note) {
     activateColumn(activeColumn);
   } else {
     switch (note) {
-      case 'E4':
+      case 'F4':
         activeColumn = 1;
         break;
-      case 'F4':
+      case 'F#4':
         activeColumn = 2;
         break;
-      case 'F#4':
+      case 'G4':
         activeColumn = 3;
         break;
-      case 'G4':
+      case 'G#4':
         activeColumn = 4;
         break;
-      case 'G#4':
+      case 'A5':
         activeColumn = 5;
         break;
     }
@@ -135,7 +135,7 @@ function activateColumn(column) {
 function playNote(charTyped) {
   if (!initialized) return;
   if (charTyped === 'bs') {
-    $text.html($text.text().splice(0, $text.text().length - 1));
+    $text.html($text.text().slice(0, $text.text().length - 1));
   } else {
     $text.html($text.text() + charTyped);
   }
