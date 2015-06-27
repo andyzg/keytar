@@ -1,16 +1,20 @@
 // global variables
 var initialized = false,
   activeColumn = 0,
-  fret;
+  port = chrome.runtime.connect({name: 'keytar'});;
 
 // DOM elements
 var $keyboard,
   $text;
 
+port.onMessage.addListener(function(msg) {
+  console.log('got' + msg.note);
+  playNote(msg.note);
+});
 
+loadStyle();
+loadKeyboard();
 $(document).ready(function () {
-  loadStyle();
-  loadKeyboard();
   $keyboard = $('.kt-keyboard');
   $('textarea, input, .tweet-box, [role="textbox"]').focus(function () {
     toggleKeyboard(true);
@@ -42,7 +46,7 @@ function playNote(note) {
 
 function loadStyle() {
   var link = document.createElement('link');
-  link.href = 'http://fonts.googleapis.com/css?family=Roboto';
+  link.href = '//fonts.googleapis.com/css?family=Roboto';
   link.type = 'text/css';
   link.rel = 'stylesheet';
   document.getElementsByTagName('head')[0].appendChild(link);

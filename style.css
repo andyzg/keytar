@@ -24,6 +24,7 @@ p {
   text-align: center;
   transform: translateY(350px);
   transition: transform 0.3s;
+  z-index: 1000000;
 }
 .kt-keyboard.active {
   transform: none;
