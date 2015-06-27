@@ -62,17 +62,24 @@ var KeyboardState = function(callback) {
   this.options = KEY_NOTE_MAPPINGS;
 };
 
+KeyboardState.prototype.reset = function() {
+  this.options = KEY_NOTE_MAPPINGS;
+  activeColumn = 0;
+  activateColumn(activeColumn);
+};
+
 KeyboardState.prototype.addNote = function(note) {
   if (!(note in this.options)) {
+    if (KEY_NOTE_MAPPINGS[note] === 'bs') {
+      this.reset();
+    }
     return;
   }
+
   this.options = this.options[note];
-  console.log('OPTIONS:', this.options);
   if (typeof this.options === 'string') {
     this.typeKey(this.options);
-    this.options = KEY_NOTE_MAPPINGS;
-    activeColumn = 0;
-    activateColumn(activeColumn);
+    this.reset();
   } else {
     switch (note) {
       case 'F4':
@@ -127,8 +134,8 @@ function toggleKeyboard(activate) {
 function activateColumn(column) {
   if (!active) return;
   activeColumn = column;
-  if (column == 0) return;
   $('.kt-column').removeClass('active');
+  if (column == 0) return;
   $('.kt-column:eq('+(column-1)+')').addClass('active');
 }
 
