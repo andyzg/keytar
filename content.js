@@ -1,14 +1,17 @@
 // global variables
 var initialized = false,
+  active = false;
   activeColumn = 0,
   port = chrome.runtime.connect({name: 'keytar'});;
 
 // DOM elements
 var $keyboard,
-  $text;
+  $text,
+  $pitch;
 
 port.onMessage.addListener(function(msg) {
-  console.log('got' + msg.note);
+  if (!active) return;
+  console.log('got ' + msg.note);
   playNote(msg.note);
 });
 
@@ -16,6 +19,7 @@ loadStyle();
 loadKeyboard();
 $(document).ready(function () {
   $keyboard = $('.kt-keyboard');
+  $pitch = $('.kt-active-pitch p');
   $('textarea, input, .tweet-box, [role="textbox"]').focus(function () {
     toggleKeyboard(true);
     $text = $(this);
@@ -26,6 +30,7 @@ $(document).ready(function () {
 
 function toggleKeyboard(activate) {
   if (!initialized) return;
+  active = activate;
   if (activate) {
     $keyboard.addClass('active');
   } else {
@@ -34,20 +39,22 @@ function toggleKeyboard(activate) {
 }
 
 function activateColumn(column) {
-  if (!initialized) return;
+  if (!active) return;
   activeColumn = column;
+  if (column == 0) return;
   $('.kt-column').removeClass('active');
-  $('.kt-column:eq('+column+')').addClass('active');
+  $('.kt-column:eq('+(column-1)+')').addClass('active');
 }
 
 function playNote(note) {
-  if (!initialized) return;
+  if (!active) return;
+  $pitch.html(note);
   $text.val($text.val() + 'c');
 }
 
 function loadStyle() {
   var link = document.createElement('link');
-  link.href = '//fonts.googleapis.com/css?family=Roboto';
+  link.href = 'https://fonts.googleapis.com/css?family=Roboto';
   link.type = 'text/css';
   link.rel = 'stylesheet';
   document.getElementsByTagName('head')[0].appendChild(link);
@@ -75,7 +82,7 @@ function loadKeyboard() {
 
   $container.appendChild($activePitch);
   var pitch = document.createElement('p');
-  pitch.textContent = 'A#4';
+  pitch.textContent = '-';
   $activePitch.appendChild(pitch);
 
   $container.appendChild($keyWrap);
