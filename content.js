@@ -23,6 +23,7 @@ var KEY_NOTE_MAPPINGS = {
     'A#4': 'V',
     'C#4': 'D',
     'D4': 'F',
+    'D5': 'F',
     'F#4': 'E',
     'G4': 'R',
   },
@@ -30,6 +31,8 @@ var KEY_NOTE_MAPPINGS = {
     'A#4': 'B',
     'B4': 'N',
     'D4': 'G',
+    'D5': 'G',
+    'D#5': 'H',
     'D#4': 'H',
     'G4': 'T',
     'G#4': 'Y',
@@ -38,6 +41,7 @@ var KEY_NOTE_MAPPINGS = {
     'B4': 'M',
     'C4': ',',
     'D#4': 'J',
+    'D#5': 'J',
     'E4': 'K',
     'G#4': 'U',
     'A5': 'I',
@@ -69,6 +73,10 @@ KeyboardState.prototype.reset = function() {
 };
 
 KeyboardState.prototype.addNote = function(note) {
+  // if ('./,;'.indexOf(this.options) > -1) {
+  //   this.reset();
+  //   return;
+  // }
   if (!(note in this.options)) {
     if (KEY_NOTE_MAPPINGS[note] === 'bs') {
       this.reset();
@@ -143,12 +151,15 @@ function activateColumn(column) {
 }
 
 function animateCharacter(charTyped) {
+  // if ('./,;'.indexOf(this.options) > -1) {
+  //   return;
+  // }
   var $charBox = $('#kt-' + charTyped);
   console.log($charBox);
   $charBox.find('svg').remove();
   var cx = $($charBox).width() / 2;
   var cy = $($charBox).height() / 2;
-  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '" fill="#80BDC9"></circle></svg>');
+  $charBox.append('<svg class="kt-touch"><circle cx="' + cx + '" cy="' + cy + '" r="' + 0 + '" fill="#fff"></circle></svg>');
   console.log(cx, cy);
   setTimeout(function() {
     var $circle = $($charBox).find('circle');
@@ -167,8 +178,9 @@ function animateCharacter(charTyped) {
 function typeChar(charTyped) {
   if (!initialized) return;
   if (charTyped === 'bs') {
-    $text.html($text.text().slice(0, $text.text().length - 1));
+    $text.text($text.text().slice(0, $text.text().length - 1));
   } else {
+    animateCharacter(charTyped);
     $text.html($text.text() + charTyped);
   }
 }

@@ -123,7 +123,7 @@ Controller.prototype.cancelNotePlayed = function() {
 
 Controller.prototype.callNote = function(index) {
   this.notePlayed = null;
-  if (index === this.lastPlayedIndex && new Date().getTime() - this.lastTimestamp < 500) {
+  if (index === this.lastPlayedIndex && new Date().getTime() - this.lastTimestamp < 750) {
     return;
   }
   console.log(this.FREQUENCIES[index]);
