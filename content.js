@@ -1,7 +1,7 @@
 // global variables
 var initialized = false,
   active = false;
-  activeColumn = 0,
+  activeColumn = -1,
   port = chrome.runtime.connect({name: 'keytar'});;
 
 // DOM elements

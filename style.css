@@ -32,12 +32,12 @@ body {
   border-radius: 50%;
   width: 80px;
   height: 80px;
-  background-color: #30a67b;
+  background-color: #0084b4;
   left: 50%;
   top: 0;
-  transform: translate(-50%, -50%);
   text-align: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
 }
 .kt-active-pitch p {
   font-size: 24px;
@@ -50,7 +50,7 @@ body {
   width: 48px;
 }
 .kt-note {
-  background-color: #30a67b;
+  background-color: #0084b4;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -79,14 +79,14 @@ body {
   float: left;
   margin-left: 12px;
   margin-bottom: 12px;
-  background-color: #92f47e;
+  background-color: #1dcaff;
   width: 96px;
   height: 144px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s;
 }
 .kt-column.active {
-  background-color: #3ac469;
+  background-color: #00aced;
 }
 .kt-column:first-child {
   margin-left: 0;
@@ -106,7 +106,7 @@ body {
   margin: 0;
 }
 .kt-char.bottom {
-  background-color: #3ac469;
+  background-color: #00aced;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 }
 .kt-char.bottom.spacebar {
