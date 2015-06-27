@@ -5,12 +5,6 @@ body {
   overflow: hidden;
 }
 
-p {
-  font-family: 'Roboto', sans-serif;
-  color: #fff;
-
-}
-
 .kt-keyboard {
   box-sizing: border-box;
   position: fixed;
@@ -25,6 +19,10 @@ p {
   transform: translateY(350px);
   transition: transform 0.3s;
   z-index: 1000000;
+}
+.kt-keyboard p {
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
 }
 .kt-keyboard.active {
   transform: none;

@@ -18,6 +18,7 @@ $(document).ready(function () {
   $keyboard = $('.kt-keyboard');
   $('textarea, input, .tweet-box, [role="textbox"]').focus(function () {
     toggleKeyboard(true);
+    $text = $(this);
   }).blur(function () {
     toggleKeyboard(false);
   });
