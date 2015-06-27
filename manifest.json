@@ -8,7 +8,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://twitter.com/*"],
       "css": [ "style.css" ],
       "js": ["jquery-2.1.4.min.js", "content.js"]
     }

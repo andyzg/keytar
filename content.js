@@ -9,10 +9,103 @@ var $keyboard,
   $text,
   $pitch;
 
+var KEY_NOTE_MAPPINGS = {
+  'F4': {
+    'G#3': 'Z',
+    'A3': 'X',
+    'C4': 'A',
+    'C#4': 'S',
+    'F4': 'Q',
+    'F#4': 'W',
+  },
+  'F#4': {
+    'A4': 'C',
+    'A#4': 'V',
+    'C#4': 'D',
+    'D4': 'F',
+    'F#4': 'E',
+    'G4': 'R',
+  },
+  'G4': {
+    'A#4': 'B',
+    'B4': 'N',
+    'D4': 'G',
+    'D#4': 'H',
+    'G4': 'T',
+    'G#4': 'Y',
+  },
+  'G#4': {
+    'B4': 'M',
+    'C4': ',',
+    'D#4': 'J',
+    'E4': 'K',
+    'G#4': 'U',
+    'A5': 'I',
+  },
+  'A5': {
+    'C4': '.',
+    'C#4': '/',
+    'E4': 'L',
+    'F4': ';',
+    'A5': 'O',
+    'A#5': 'P',
+  },
+  'D#3': ' ',
+  'E3': ' ',
+  'F3': ' ',
+  'F#3': 'bs',
+  'G3': 'bs'
+};
+
+var KeyboardState = function(callback) {
+  this.typeKey = callback;
+  this.options = KEY_NOTE_MAPPINGS;
+};
+
+KeyboardState.prototype.reset = function() {
+  this.options = KEY_NOTE_MAPPINGS;
+  activeColumn = 0;
+  activateColumn(activeColumn);
+};
+
+KeyboardState.prototype.addNote = function(note) {
+  if (!(note in this.options)) {
+    if (KEY_NOTE_MAPPINGS[note] === 'bs') {
+      this.reset();
+    }
+    return;
+  }
+
+  this.options = this.options[note];
+  if (typeof this.options === 'string') {
+    this.typeKey(this.options);
+    this.reset();
+  } else {
+    switch (note) {
+      case 'F4':
+        activeColumn = 1;
+        break;
+      case 'F#4':
+        activeColumn = 2;
+        break;
+      case 'G4':
+        activeColumn = 3;
+        break;
+      case 'G#4':
+        activeColumn = 4;
+        break;
+      case 'A5':
+        activeColumn = 5;
+        break;
+    }
+    activateColumn(activeColumn);
+  }
+};
+
+var keyboardState = new KeyboardState(playNote);
 port.onMessage.addListener(function(msg) {
-  if (!active) return;
-  console.log('got ' + msg.note);
-  playNote(msg.note);
+  console.log('got' + msg.note);
+  keyboardState.addNote(msg.note);
 });
 
 loadStyle();
@@ -41,15 +134,18 @@ function toggleKeyboard(activate) {
 function activateColumn(column) {
   if (!active) return;
   activeColumn = column;
-  if (column == 0) return;
   $('.kt-column').removeClass('active');
+  if (column == 0) return;
   $('.kt-column:eq('+(column-1)+')').addClass('active');
 }
 
-function playNote(note) {
-  if (!active) return;
-  $pitch.html(note);
-  $text.val($text.val() + 'c');
+function playNote(charTyped) {
+  if (!initialized) return;
+  if (charTyped === 'bs') {
+    $text.html($text.text().slice(0, $text.text().length - 1));
+  } else {
+    $text.html($text.text() + charTyped);
+  }
 }
 
 function loadStyle() {
