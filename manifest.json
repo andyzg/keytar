@@ -1,15 +1,12 @@
 {
   "manifest_version": 2,
+<<<<<<< HEAD
   "name": "Keytar",
   "description": "Description",
   "version": "0.1",
   "browser_action": {
     "default_icon": "img/icon.png"
   },
-  "permissions": [
-    "activeTab",
-    "https://ajax.googleapis.com/"
-  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -17,8 +14,17 @@
       "js": ["jquery-2.1.4.min.js", "content.js"]
     }
   ],
+  "options_page": "options.html",
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+    "audioCapture"
+  ],
   "background": {
-    "scripts": ["jquery-2.1.4.min.js"],
-    "persistent": false
+    "scripts": [
+      "background_scripts/frequency.js",
+      "background_scripts/patch-worker.js",
+      "background_scripts/audio.js"
+    ]
   }
 }
