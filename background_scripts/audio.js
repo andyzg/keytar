@@ -89,9 +89,19 @@ var Controller = function() {
   this.soundSequencer = new SoundSequencer(2048, this.processDataSeries.bind(this));
   // This sequences the note that MIGHT be played
   this.magSequencer = new MagnitudeSequencer(2, this.addMagnitude.bind(this));
+  // This is the class that checks if there's a note played or if it's just noise
   this.notePlayed = null;
+  // Don't want to repeat the same note
   this.lastPlayedIndex = -1;
+  this.currentTabId = -1;
+  this.currentPort = null;
 };
+
+Controller.prototype.subscribe = function(tabId, port) {
+  console.log(tabId);
+  this.currentTabId = tabId;
+  this.currentPort = port;
+}
 
 Controller.prototype.addMagnitude = function(mag, index) {
   if (this.notePlayed) {
@@ -108,13 +118,12 @@ Controller.prototype.cancelNotePlayed = function() {
 };
 
 Controller.prototype.callNote = function(index) {
-  // console.log(this.FREQUENCIES[index]);
-  // TODO
   this.notePlayed = null;
   if (index === this.lastPlayedIndex) {
     return;
   }
   console.log(this.FREQUENCIES[index]);
+  this.currentPort.postMessage(this.FREQUENCIES[index]);
   this.lastPlayedIndex = index;
 };
 
@@ -185,3 +194,14 @@ Controller.prototype.start = function() {
 
 var Controller = new Controller();
 Controller.start();
+
+chrome.runtime.onConnect.addListener(function(port) {
+  console.assert(port.name === 'keytar');
+  chrome.tabs.query({
+    currentWindow: true,
+    active: true
+  }, function(tabId) {
+    // Only one subscription at a time, replaces previous one
+    Controller.subscribe(tabId, port);
+  });
+});
